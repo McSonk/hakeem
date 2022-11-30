@@ -30,6 +30,7 @@ app = Flask(__name__)
 db = SQLAlchemy()
 #configure
 app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://imperial:ImperialFDT2022@fdt-do-not-delete.ckp3dl3vzxoh.eu-west-2.rds.amazonaws.com:5432/dvdrental"
+app.config['SQLALCHEMY_ECHO'] = True
 #initialize app with extension
 db.init_app(app)
 
@@ -57,31 +58,35 @@ def tables():
 
 db.Model = declarative_base()
 
-film_actor = db.Table(
-    'film_actor',
-    db.Model.metadata,
-    db.Column('film_id', ForeignKey('film.film_id')),
-    db.Column('actor_id', ForeignKey('actor.actor_id'))
-    )
+# FilmActor = db.Table('film_actor',
+#   db.Model.metadata,
+#   db.Column('actor_id', db.Integer, ForeignKey('Actor.actor_id'), primary_key=True),
+#   db.Column('film_id', db.Integer, ForeignKey('Film.film_id'), primary_key=True)
+# )
 
 class Film(db.Model):
   __tablename__ = 'film'
   film_id = db.Column(db.Integer, primary_key=True)
   title = db.Column(db.String)
-  actor = db.relationship('Actor', secondary = film_actor,
-    back_populates = 'film'
-  )
+
+  #actors = relationship('Actor', secondary=FilmActor, backref='Film')
 
 
 class Actor(db.Model):
   __tablename__ = 'actor'
   actor_id = db.Column(db.Integer, primary_key=True)
   first_name = db.Column(db.String)
-  last_name = db.Column(db.String)    
-  film = db.relationship('Film', secondary = film_actor,
-    back_populates = 'actor'
-  )
+  last_name = db.Column(db.String)
 
+  #films = relationship('Film', secondary=FilmActor, backref='Actor')
+
+class FilmActor(db.Model):
+  __tablename__ = 'film_actor'
+  actor_id = Column(Integer, ForeignKey(Actor.actor_id), primary_key=True)
+  film_id = Column(Integer, ForeignKey(Film.film_id), primary_key=True)
+
+  actor = relationship('Actor', foreign_keys='FilmActor.actor_id')
+  film = relationship('Film', foreign_keys='FilmActor.film_id')
 
 
 @app.route('/films')
@@ -101,10 +106,15 @@ def allfilms():
 
 @app.route('/actorfilm')
 def actorfilm():
-    actorfilm = (db.session.query(Film.film_id, Film.title, Actor.first_name, 
-        film_actor).filter(film_actor.c.film_id == Film.film_id).filter(film_actor.c.actor_id == Actor.actor_id).all()
-        )
-    return render_template("actorfilm.html", actorfilm = actorfilm)
+    films = db.session.execute(
+      db.select(Film).order_by(Film.film_id)
+    ).scalars()
+
+    test = db.session.execute(
+      db.select(FilmActor)
+    ).scalars()
+
+    return render_template("actorfilm.html", actorfilm=test)
 
 
 
