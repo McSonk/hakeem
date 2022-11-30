@@ -1,0 +1,26 @@
+<style>
+body{
+  font-family: Arial;
+
+}
+
+</style>
+
+
+<h1>Films and Actors<h1>
+
+<p>
+List of  all films and their actors!
+</p>
+
+<table border="1">
+
+{% for film in actorfilms %}
+    <tr>
+    <td>{{ film.title }}</td>
+    <td>{{ actor.first_name }}</td>
+
+    </tr>
+{% endfor %}
+
+</table>

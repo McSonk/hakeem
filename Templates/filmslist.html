@@ -1,0 +1,28 @@
+<style>
+body{
+  font-family: Arial;
+
+}
+
+</style>
+
+
+<h1>List Films<h1>
+
+<p>
+List of films!
+</p>
+
+<p>Number of rows: {{count}}</p>
+
+<table border="1">
+
+{% for film in films %}
+    <tr>
+    <td>{{ film.film_id }}</td>
+    <td>{{ film.title }}</td>
+
+    </tr>
+{% endfor %}
+
+</table>

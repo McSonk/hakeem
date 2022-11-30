@@ -1,0 +1,30 @@
+<style>
+body{
+  font-family: Arial;
+
+}
+
+</style>
+
+
+<h1>List Films<h1>
+
+<p>
+List of 50 films and their descriptions!
+</p>
+
+<table border="1">
+
+{% for film in films %}
+    <tr>
+    <td>{{ film[0] }}</td>
+
+    <td>{{ film[1] }}</td>
+
+    <td>{{ film[2] }}</td>
+
+
+    </tr>
+{% endfor %}
+
+</table>

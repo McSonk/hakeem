@@ -1,0 +1,26 @@
+<style>
+body{
+  font-family: Arial;
+
+}
+
+</style>
+
+
+<h1>Films<h1>
+
+<p>
+List of  all films!
+</p>
+
+<table border="1">
+
+{% for film in allfilms %}
+    <tr>
+    <td>{{ film.film_id }}</td>
+    <td>{{ film.title }}</td>
+
+    </tr>
+{% endfor %}
+
+</table>

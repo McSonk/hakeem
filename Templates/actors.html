@@ -1,0 +1,30 @@
+<style>
+body{
+  font-family: Arial;
+
+}
+
+</style>
+
+
+<h1>List Actors<h1>
+
+<p>
+List of all actors names!
+</p>
+
+<table border="1">
+
+{% for actor in actors %}
+    <tr>
+    <td>{{ actor[0] }}</td>
+
+    <td>{{ actor[1] }}</td>
+
+    <td>{{ actor[2] }}</td>
+
+
+    </tr>
+{% endfor %}
+
+</table>
