@@ -93,9 +93,11 @@ def films():
 
 @app.route('/allfilms')
 def allfilms():
-    allfilms = db.session.execute(db.select(Film).order_by(Film.film_id)).scalars()
+    allfilms = db.session.execute(
+      db.select(Film).order_by(Film.film_id)\
+    ).scalars()
     return render_template("allfilms.html", allfilms = allfilms)
-                
+
 
 @app.route('/actorfilm')
 def actorfilm():
