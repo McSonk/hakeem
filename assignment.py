@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 
 
@@ -43,10 +43,25 @@ class Exam(db.Model):
 
 # ########### HTML STUFF ####################
 # Configure the default view
-@app.route('/')
+# We're serving 2 HTTP methods with this python function
+# GET = Get the data: query info from the DB
+# POST = Add a data record to the database
+@app.route('/', methods=["GET", "POST"])
 def home():
+    if request.method == 'POST':
+        # POST detected! Thus, we need to add a record
+        name = request.form['name']
+        number = request.form['number']
+        exam = Exam()
+        exam.name = name
+        exam.n_of_questions = number
+
+        db.session.add(exam)
+        db.session.commit()
     # Queries all the rows on the table
-    exams = Exam.query.all()
+    exams = db.session.execute(
+        db.select(Exam)
+    ).scalars()
     # Send the query's result to the template
     return render_template("assignment.html", rows=exams)
 

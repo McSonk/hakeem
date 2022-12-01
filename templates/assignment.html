@@ -6,7 +6,15 @@
     <body>
         <h2>My own database!</h2>
         <p>This time I'll connect to my local database. Hopefully it works!</p>
-
+        <hr />
+        <h2>Form</h2>
+        <p>Don't be shy! Let's add some data...</p>
+        <form method="post">
+            Name: <input type="text" name='name'/>
+            Number: <input type="text" name='number'/>
+            <br/>
+            <input type="submit" value='Add'/>
+        </form>
         <hr />
         <h2>Query table</h2>
         <p>now, let's query the table to see its contents:</p>
@@ -16,13 +24,13 @@
                 <th>name</th>
                 <th>number</th>
             </tr>
-            <tr>
-                {% for row in rows %}
+            {% for row in rows %}
+                <tr>
                     <td>{{row.id}}</td>
                     <td>{{row.name}}</td>
                     <td>{{row.n_of_questions}}</td>
-                {% endfor %}
-            </tr>
+                </tr>
+            {% endfor %}
         </table>
     </body>
 </html>
