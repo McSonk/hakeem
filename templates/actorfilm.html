@@ -14,11 +14,14 @@ List of  all films and their actors!
 </p>
 
 <table border="1">
-
-{% for film in actorfilms %}
+  <tr>
+    <th>Film</th>
+    <th>Actor</th>
+  </tr>
+{% for film in actorfilm %}
     <tr>
-    <td>{{ film.title }}</td>
-    <td>{{ actor.first_name }}</td>
+      <td>{{ film.film.title }}</td>
+      <td>{{ film.actor.first_name }} {{ film.actor.last_name }}  </td>
 
     </tr>
 {% endfor %}
