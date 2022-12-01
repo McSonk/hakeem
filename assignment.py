@@ -31,13 +31,13 @@ db = SQLAlchemy(app)
 # ------- Models ------------
 
 # Basic page, basic model. So, just 1 table and 1 model
-class Exam(db.Model):
-    __tablename__ = 'exam'
-    __table_args__ = {'schema': 'eromn' }
+class Student(db.Model):
+    __tablename__ = 'student'
+    __table_args__ = {'schema': 'school' }
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String())
-    n_of_questions = db.Column(db.Integer())
+    score = db.Column(db.Integer())
 
 
 
@@ -52,15 +52,15 @@ def home():
         # POST detected! Thus, we need to add a record
         name = request.form['name']
         number = request.form['number']
-        exam = Exam()
-        exam.name = name
-        exam.n_of_questions = number
+        student = Student()
+        student.name = name
+        student.score = number
 
-        db.session.add(exam)
+        db.session.add(student)
         db.session.commit()
     # Queries all the rows on the table
     exams = db.session.execute(
-        db.select(Exam)
+        db.select(Student)
     ).scalars()
     # Send the query's result to the template
     return render_template("assignment.html", rows=exams)
