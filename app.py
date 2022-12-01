@@ -47,27 +47,16 @@ def tables():
 
 db.Model = declarative_base()
 
-# FilmActor = db.Table('film_actor',
-#   db.Model.metadata,
-#   db.Column('actor_id', db.Integer, ForeignKey('Actor.actor_id'), primary_key=True),
-#   db.Column('film_id', db.Integer, ForeignKey('Film.film_id'), primary_key=True)
-# )
-
 class Film(db.Model):
   __tablename__ = 'film'
   film_id = db.Column(db.Integer, primary_key=True)
   title = db.Column(db.String)
-
-  #actors = relationship('Actor', secondary=FilmActor, backref='Film')
-
 
 class Actor(db.Model):
   __tablename__ = 'actor'
   actor_id = db.Column(db.Integer, primary_key=True)
   first_name = db.Column(db.String)
   last_name = db.Column(db.String)
-
-  #films = relationship('Film', secondary=FilmActor, backref='Actor')
 
 class FilmActor(db.Model):
   __tablename__ = 'film_actor'
@@ -116,26 +105,3 @@ def actorfilm():
 
 if __name__ == "__main__":  
     app.run(debug=True)
-
-
-#no = db.session.query(db.func.count(Film.film_id)).scalar()
-
-#Construct the declarative base object - a base on which we build our database models
-#Base = declarative_base()
-#Set the database URI
-#db_uri = 'postgresql://imperial:ImperialFDT2022@fdt-do-not-delete.ckp3dl3vzxoh.eu-west-2.rds.amazonaws.com/dvdrental'
-#Make an engine (our interface to the database)
-#engine = create_engine(db)
-#(func.count(Film.film_id))
-
-# db = 'postgresql://imperial:ImperialFDT2022@fdt-do-not-delete.ckp3dl3vzxoh.eu-west-2.rds.amazonaws.com/dvdrental'
-# #Construct the declarative base object - a base on which we build our database models
-# Base = declarative_base()
-# #Make an engine (our interface to the database)
-# engine = create_engine(db)
-# #Make a sessionmaker (construct sessions), then a session (one engine can have many sessions)
-# Session = sessionmaker()
-# Session.configure(bind=engine)
-# session = Session()
-
-#<link rel = "stylesheet" type = "text/css" href = "{{url_for('static', filename = 'style.css')}}">
