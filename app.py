@@ -5,24 +5,12 @@ Created on Sat Nov 26 23:09:13 2022
 @author: hakee
 """
 
+import psycopg2
 from flask import Flask, render_template
-import psycopg2 
-import sqlalchemy
-import os
-from pdb import set_trace
-from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import func
-from flask import render_template
-from sqlalchemy.orm import relationship
-from sqlalchemy import Table, Column, Integer, ForeignKey
-from sqlalchemy import text
-import pdb
-from sqlalchemy import create_engine, inspect
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy import Column, Integer, String, ForeignKey, MetaData
-from sqlalchemy.orm import relationship
+from sqlalchemy import (Column, ForeignKey, Integer, text)
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import relationship
 
 #create the app
 app = Flask(__name__)
