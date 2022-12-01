@@ -45,8 +45,10 @@ class Exam(db.Model):
 # Configure the default view
 @app.route('/')
 def home():
+    # Queries all the rows on the table
     exams = Exam.query.all()
-    return render_template("assignment.html")
+    # Send the query's result to the template
+    return render_template("assignment.html", rows=exams)
 
 # Initialize everything
 if __name__ == "__main__":

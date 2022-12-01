@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Questions 16 & 17</title>
+    </head>
+    <body>
+        <h2>My own database!</h2>
+        <p>This time I'll connect to my local database. Hopefully it works!</p>
+
+        <hr />
+        <h2>Query table</h2>
+        <p>now, let's query the table to see its contents:</p>
+        <table border="1">
+            <tr>
+                <th>id</th>
+                <th>name</th>
+                <th>number</th>
+            </tr>
+            <tr>
+                {% for row in rows %}
+                    <td>{{row.id}}</td>
+                    <td>{{row.name}}</td>
+                    <td>{{row.n_of_questions}}</td>
+                {% endfor %}
+            </tr>
+        </table>
+    </body>
+</html>
