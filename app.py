@@ -16,6 +16,7 @@ from sqlalchemy import func
 from flask import render_template
 from sqlalchemy.orm import relationship
 from sqlalchemy import Table, Column, Integer, ForeignKey
+from sqlalchemy import text
 import pdb
 from sqlalchemy import create_engine, inspect
 from sqlalchemy.orm import sessionmaker
@@ -106,14 +107,21 @@ def allfilms():
 
 @app.route('/actorfilm')
 def actorfilm():
-    films = db.session.execute(
-      db.select(Film).order_by(Film.film_id)
-    ).scalars()
-
+    query = '''
+    SELECT
+        actor_id,
+        film_id
+    FROM (
+        SELECT *,
+        row_number() OVER (partition by film_id order by film_id) FROM film_actor) temp
+    WHERE
+        row_number = 1
+    LIMIT 10
+    '''
+    statement = text(query).columns(FilmActor.actor_id, FilmActor.film_id)
     test = db.session.execute(
-      db.select(FilmActor)
+      db.select(FilmActor).from_statement(statement)
     ).scalars()
-
     return render_template("actorfilm.html", actorfilm=test)
 
 
